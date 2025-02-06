@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import Product from "../Product/Product";
+import Load from "../Load/Load";
 
 
 export default function Products(){
@@ -31,13 +32,16 @@ export default function Products(){
 
     }
 
-    return <>
-        <div className="w-8/12 mx-auto my-4">
+    return (products.length)<1? 
+        <Load />
+        :
+        <> <div className="w-8/12 mx-auto my-4">
             <input type="text" placeholder="search..." className="w-full rounded border-gray-300 size-10" onInput={searchInput} />
         </div>
         <div className="flex container flex-wrap m-auto">
             {filteresProducts.map((product)=> <Product product={product}></Product>)}
-        </div>
+        </div></>
         
-    </>
+        
+    
 }
