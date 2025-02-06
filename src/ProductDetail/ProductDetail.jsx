@@ -1,11 +1,16 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Load from "../Load/Load";
+import { UserLogin } from "../Context/Context";
 
 
 export default function ProductDetail(){
     const {id} = useParams();
+
+    let z = useContext(UserLogin)
+    console.log(z);
+    
     
     const [product, setProduct] = useState(null);
 
@@ -13,13 +18,13 @@ export default function ProductDetail(){
         let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
         
         setProduct(data.data);
-        console.log(data.data);
         
     }
 
 
     useEffect(()=>{
         getProduct();
+        
     }, []);
 
   
@@ -28,48 +33,17 @@ export default function ProductDetail(){
         <Load></Load>
         :
         <>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      
 
 
         <div className="flex items-center container m-auto">
             <div className="w-1/3 ">
-                
-                <div id="default-carousel" class="relative w-full" data-carousel="slide">
-    
-                    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        {product.images.map((image, i)=>{
-                            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                                <img src={image} class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" key={i} alt="producat image"/>
+               
+                            <div className="" >
+                                <img src={product.imageCover} alt="producat image"/>
                             </div>
-                        })}
-                        
-                    </div>
+                       
                 
-                    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                        {product.images.map((image, i)=>{
-                            
-                            <button type="button" class="w-3 h-3 rounded-full" aria-current={i==0? "tru":"false"} aria-label={`Slide ${i+1}`} data-carousel-slide-to={i}></button>
-                     
-                        })}
-                    </div>
-                    
-                </div>
             
             </div>
             <div className="w-2/3">

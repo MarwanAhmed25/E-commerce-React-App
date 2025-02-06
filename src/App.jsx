@@ -10,6 +10,7 @@ import Notfound from './Notfound/Notfound'
 import ProductDetail from './ProductDetail/ProductDetail'
 import Category from './Category/Category'
 import Brand from './Brand/Brand'
+import UserLoginProvider from './Context/Context'
 
 let router = createBrowserRouter([
   {path:'', element:<Layout/>, children:[
@@ -24,11 +25,12 @@ let router = createBrowserRouter([
 ])
 
 function App() {
-
+  UserLoginProvider
   return (
     <>
-    <RouterProvider router={router}></RouterProvider>
-    
+      <UserLoginProvider>    
+        <RouterProvider router={router}></RouterProvider>
+      </UserLoginProvider>
     </>
   )
 }
