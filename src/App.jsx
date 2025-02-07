@@ -13,16 +13,23 @@ import Brand from './Brand/Brand'
 import UserLoginProvider from './Context/Context'
 import Login from './Login/Login'
 import Register from './Register/Register'
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute'
+import ForgetPassword from './ForgetPasswprd/ForgetPassword'
+import ResetCode from './ResetCode/ResetCode'
+import ResetPassword from './RestPassword/RestPassword'
 
 let router = createBrowserRouter([
   {path:'', element:<Layout/>, children:[
-    {path:"", element: <Home/>},
+    {path:"", element: <ProtectedRoute><Home/></ProtectedRoute>},
     {path:"login", element: <Login/>},
+    {path:"forget-password", element: <ForgetPassword/>},
+    {path:"reset-code", element: <ResetCode/>},
+    {path:"reset-password", element: <ResetPassword/>},
     {path:"register", element: <Register/>},
-    {path:"categories", element: <Category/>},
-    {path:"brands", element: <Brand/>},
-    {path:"products", element: <Products/>},
-    {path:"products/:id", element: <ProductDetail />},
+    {path:"categories", element: <ProtectedRoute><Category/></ProtectedRoute>},
+    {path:"brands", element: <ProtectedRoute><Brand/></ProtectedRoute>},
+    {path:"products", element: <ProtectedRoute><Products/></ProtectedRoute>},
+    {path:"products/:id", element: <ProtectedRoute><ProductDetail /></ProtectedRoute>},
     {path:'*', element:<Notfound />},
   ]},
   
