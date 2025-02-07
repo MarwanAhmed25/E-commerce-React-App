@@ -13,8 +13,6 @@ export default function ForgetPassword(){
         
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords`, inputValues)
                         .then(({data})=>{
-                            console.log('forget pas', data);
-
                             navigate('/reset-code');
                             
                         }).catch((response)=>{

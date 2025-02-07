@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { UserLogin } from "../Context/Context";
 
 export default function Login(){
@@ -9,6 +9,20 @@ export default function Login(){
     let [error, setError] = useState("");
     let navigate = useNavigate();
     let {setUserData} = useContext(UserLogin);
+    const location = useLocation();
+    const [successMessage, setSuccessMessage] = useState("");
+
+    useEffect(() => {
+        if (location.state?.message) {
+            setSuccessMessage(location.state.message);
+
+            const timer = setTimeout(() => {
+                setSuccessMessage("");
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [location.state]);
 
     function handleRegister(inputValues){
         setIsLoading(1);
@@ -36,7 +50,9 @@ export default function Login(){
 
 
     return<>
-            
+            {successMessage && <div class="p-4 flex justify-center  text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <span className="m-auto">{successMessage}</span>
+            </div>}
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>

@@ -21,9 +21,9 @@ export default function ResetPassword(){
         
         axios.put(`https://ecommerce.routemisr.com/api/v1/auth/resetPassword`, inputValues)
                         .then(({data})=>{
-                            console.log('reset pas', data);
-                            
-                            navigate('/login');
+                            navigate('/login', {
+                                state: {message: "Success reset password."}
+                            });
                             
                         }).catch((response)=>{
                             setError(response.response.data.message);                            
