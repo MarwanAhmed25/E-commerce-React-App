@@ -9,7 +9,7 @@ export default function ProductDetail(){
     const {id} = useParams();
 
     let z = useContext(UserLogin)
-    console.log(z);
+    
     
     
     const [product, setProduct] = useState(null);

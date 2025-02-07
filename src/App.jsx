@@ -11,10 +11,14 @@ import ProductDetail from './ProductDetail/ProductDetail'
 import Category from './Category/Category'
 import Brand from './Brand/Brand'
 import UserLoginProvider from './Context/Context'
+import Login from './Login/Login'
+import Register from './Register/Register'
 
 let router = createBrowserRouter([
   {path:'', element:<Layout/>, children:[
     {path:"", element: <Home/>},
+    {path:"login", element: <Login/>},
+    {path:"register", element: <Register/>},
     {path:"categories", element: <Category/>},
     {path:"brands", element: <Brand/>},
     {path:"products", element: <Products/>},
