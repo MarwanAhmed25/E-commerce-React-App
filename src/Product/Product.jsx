@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { CartData } from "../Context/Context";
 
 
 export default function Product({product}){
 
     let {pathname} = useLocation()
+    let {addToCart} = useContext(CartData);
     
 
     return <>
@@ -32,7 +35,7 @@ export default function Product({product}){
                     </div>
                     <div className="flex items-center justify-center">
                         
-                        <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a>
+                        <button onClick={()=> addToCart(product.id)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</button>
                     </div>
                 </div>
             </div>

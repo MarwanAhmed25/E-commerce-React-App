@@ -17,6 +17,7 @@ export default function Products(){
         setFilteresProducts(data.data);
     }
 
+
     useEffect(()=>{
         getProducts();
         
