@@ -18,6 +18,8 @@ import ForgetPassword from './ForgetPasswprd/ForgetPassword'
 import ResetCode from './ResetCode/ResetCode'
 import ResetPassword from './RestPassword/RestPassword'
 import Cart from './Cart/Cart'
+import Checkout from './Checkout/Checkout'
+import Order from './Order/Order'
 
 let router = createBrowserRouter([
   {path:'', element:<Layout/>, children:[
@@ -32,6 +34,8 @@ let router = createBrowserRouter([
     {path:"products", element: <ProtectedRoute><Products/></ProtectedRoute>},
     {path:"products/:id", element: <ProtectedRoute><ProductDetail /></ProtectedRoute>},
     {path:"cart", element: <ProtectedRoute><Cart /></ProtectedRoute>},
+    {path:"checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute>},
+    {path:"allorders", element: <ProtectedRoute><Order /></ProtectedRoute>},
     {path:'*', element:<Notfound />},
   ]},
   

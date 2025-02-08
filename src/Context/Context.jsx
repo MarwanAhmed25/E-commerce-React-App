@@ -32,6 +32,7 @@ export let CartData = createContext(0);
 export function CartDataProvider({children}){
     let {userToken} = useContext(UserLogin);
     let [cartNumber, setCartNumber] = useState(0);
+    let [cartId, setCartId] = useState("");
 
     if(!cartNumber && parseInt(localStorage.getItem('cart'))){
         setCartNumber(parseInt(localStorage.getItem('cart')));
@@ -100,7 +101,7 @@ export function CartDataProvider({children}){
     }
 
 
-    return <CartData.Provider value={{updateCart, removeFromCart, addToCart, removeCart, cartNumber, setCartNumber}}>
+    return <CartData.Provider value={{cartId, setCartId, updateCart, removeFromCart, addToCart, removeCart, cartNumber, setCartNumber}}>
         {children}
     </CartData.Provider>
 }

@@ -15,6 +15,8 @@ export default function Products(){
        
         setProducts(data.data);
         setFilteresProducts(data.data);
+        console.log(data);
+        
     }
 
 

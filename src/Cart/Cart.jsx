@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function Cart(){
     let {userToken} = useContext(UserLogin);
-    let {cartNumber, updateCart, removeCart, removeFromCart, setCartNumber} = useContext(CartData);
+    let {cartNumber, updateCart, removeCart, removeFromCart, setCartNumber, setCartId} = useContext(CartData);
     let [cart, setCart] = useState(null);
     async function getCartData(){
         let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`,
@@ -20,6 +20,7 @@ export default function Cart(){
         if(data.status == "success"){
             setCartNumber(data.numOfCartItems);
             setCart(data.data);
+            setCartId(data.data._id)
         }
         
 
@@ -32,6 +33,7 @@ export default function Cart(){
 
     return (
         <>
+        
         {cart? <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Shopping Cart</h2>
@@ -106,8 +108,8 @@ export default function Cart(){
                         </div>
     
                         <button onClick={()=> removeCart(cart._id)} className="flex w-full items-center justify-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 ">Clear</button>
-                        <button className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 ">Chekout</button>
-    
+                        <Link to='/checkout' className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 ">Chekout</Link>
+
                         
     
                        
