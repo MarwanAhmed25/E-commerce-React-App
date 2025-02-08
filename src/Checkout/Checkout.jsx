@@ -21,7 +21,7 @@ export default function Checkout(){
 
     function handleRegister(inputValues){
         setIsLoading(1);
-        let nextUrl = "http://localhost:5173";
+        let nextUrl = "https://marwanahmed25.github.io/E-commerce-React-App/";
         axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${nextUrl}`, {"shippingAddress":inputValues},{
             headers:{
                 token: userToken
