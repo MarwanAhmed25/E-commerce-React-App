@@ -2,15 +2,18 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import Load from "../Load/Load";
-import { CartData, UserLogin } from "../Context/Context";
+import { CartData,  WishlistData} from "../Context/Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import Slider from "react-slick";
+import { UserLogin } from "../Context/Context"
 
 export default function ProductDetail(){
     const {id} = useParams();
-
-    let z = useContext(UserLogin)
+    const [product, setProduct] = useState(null);
+    const [wishlist, setWishlist] = useState(null);
+    const [isWishlist, setIsWishlist] = useState(0);
+    let {addToWishlist, removeFromWishlist} = useContext(WishlistData)
     let {addToCart} = useContext(CartData);
     let [isLoading, setIsLoading] = useState(0);
     var settings = {
@@ -28,20 +31,66 @@ export default function ProductDetail(){
         
     }
     
-    const [product, setProduct] = useState(null);
-
-    async function getProduct(){
-        let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
-        
-        setProduct(data.data);
+    async function fireAddWishlist(productId){
+      
+        await addToWishlist(productId);
+        setIsLoading(0);
+        setIsWishlist(1);
         
     }
 
+    async function fireRemoveFromWishlist(productId){
+
+        await removeFromWishlist(productId);
+        setIsLoading(0);
+        setIsWishlist(0);
+    }
+
+    
+    let {userToken} = useContext(UserLogin);
+    
+    function getWishlistData(){
+        axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+            {
+                headers: {
+                    token: userToken,
+                }
+            }
+        ).then(({data})=>{
+            setWishlist(data.data);
+            let tempWishlist = data.data;
+            
+            axios.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
+            .then(({data})=>{
+                setProduct(data.data);
+                let temProduct = data.data;
+                for(let i=0; i<tempWishlist?.length; i++){
+                    if(temProduct._id==tempWishlist[i]._id){
+                        console.log("temProduct");
+                        
+                        setIsWishlist(1);
+                        break;
+                    }
+                }
+                
+            }).catch((e)=>{
+                console.log(e);
+                
+            });  
+            
+        }).catch((e)=>{
+            console.log(e);
+        });
+    }
+    
+
+    
+
 
     useEffect(()=>{
-        getProduct();
+        getWishlistData();
         
-    }, []);
+    }, [isWishlist]);
 
   
 
@@ -55,7 +104,7 @@ export default function ProductDetail(){
         <div className="flex items-center container m-auto">
             <div className="w-1/3 ">
             <Slider {...settings}>
-                {product.images.map((src)=> <img src={src} alt="producat image"/>)}
+                {product.images.map((src)=> <img src={src} alt="product image"/>)}
             </Slider>
                               
                        
@@ -83,7 +132,7 @@ export default function ProductDetail(){
                         {isLoading?"Loading...":"Add to cart"}
                     </button>
                     <button className="ms-5">
-                        <FontAwesomeIcon icon={faHeart} className="text-2xl" />
+                        <FontAwesomeIcon onClick={()=> isWishlist? fireRemoveFromWishlist(product._id): fireAddWishlist(product._id)} icon={faHeart} className={`text-2xl ${isWishlist? "text-red-600":""}`} />
                         </button>
                     </div>
             </div>

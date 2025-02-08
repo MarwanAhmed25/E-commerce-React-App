@@ -1,24 +1,86 @@
-import { useContext, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { CartData } from "../Context/Context";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { CartData,  WishlistData} from "../Context/Context";
+import { UserLogin } from "../Context/Context";
+import Load from "../Load/Load";
+
+
 
 export default function Product({product}){
 
     let {pathname} = useLocation()
     let {addToCart} = useContext(CartData);
     let [isLoading, setIsLoading] = useState(0);
+    let [isAdd, seIsAdd] = useState(0);
+    
+    const [isWishlist, setIsWishlist] = useState(0);
+    let {addToWishlist, removeFromWishlist} = useContext(WishlistData)
 
     async function fireAddToCart(productId){
-        setIsLoading(1);
+        seIsAdd(1);
         await addToCart(productId);
-        setIsLoading(0);
+        seIsAdd(0);
         
+    }
+
+    async function fireAddWishlist(productId){
+        setIsLoading(1);
+        await addToWishlist(productId);
+        setIsLoading(0);
+        setIsWishlist(1);
+        
+    }
+
+    async function fireRemoveFromWishlist(productId){
+        setIsLoading(1);
+        await removeFromWishlist(productId);
+        setIsLoading(0);
+        setIsWishlist(0);
+    }
+
+    
+    let {userToken} = useContext(UserLogin);
+    
+    function getWishlistData(){
+        axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+            {
+                headers: {
+                    token: userToken,
+                }
+            }
+        ).then(({data})=>{
+
+            let tempWishlist = data.data;
+            
+            for(let i=0; i<tempWishlist?.length; i++){
+                if(Product._id==tempWishlist[i]._id){
+                    console.log("temProduct");
+                    
+                    setIsWishlist(1);
+                    break;
+                }
+            } 
+            
+        }).catch((e)=>{
+            console.log(e);
+        });
     }
     
 
-    return <>
+    
+
+
+    useEffect(()=>{
+        getWishlistData();
+        
+    }, [isWishlist]);
+
+    
+
+    return (isLoading)? <Load/>: <>
                 
         <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/5" key={product.id}>
             <div className="max-w-sm  sm:mx-auto md:m-2 bg-white hover:border border-gray-200 rounded-lg hover:shadow dark:bg-gray-800 dark:border-gray-700">
@@ -45,10 +107,10 @@ export default function Product({product}){
                     <div className="flex items-center justify-center">
                         
                         <button onClick={()=> fireAddToCart(product.id)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        {isLoading?"Loading...":"Add to cart"}
+                        {isAdd?"Loading...":"Add to cart"}
                         </button>
                         <button className="ms-2">
-                        <FontAwesomeIcon icon={faHeart} className="text-2xl" />
+                        <FontAwesomeIcon onClick={()=> isWishlist? fireRemoveFromWishlist(product._id): fireAddWishlist(product._id)} icon={faHeart} className={`text-2xl ${isWishlist? "text-red-600":""}`} />
                         </button>
 
                     </div>
@@ -57,4 +119,5 @@ export default function Product({product}){
         </div>
 
     </>
+    
 }
