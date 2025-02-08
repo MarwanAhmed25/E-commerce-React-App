@@ -11,7 +11,6 @@ export default function Category({home}){
         let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
         
         setCategories(data.data);
-        console.log(data.data);
         
     }
 

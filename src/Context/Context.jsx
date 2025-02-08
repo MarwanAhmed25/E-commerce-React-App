@@ -149,11 +149,6 @@ export function WishlistDataProvider({children}){
             }
         );
 
-        if(data.status == "success"){
-            console.log('add', data);
-            
-        }
-        
     }
 
     async function removeFromWishlist(productId){
@@ -164,11 +159,6 @@ export function WishlistDataProvider({children}){
                 }
             }
         );
-
-        if(data.status == "success"){
-            console.log('remove', data);
-            
-        }
         
     }
 

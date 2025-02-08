@@ -56,8 +56,7 @@ export default function Product({product}){
             let tempWishlist = data.data;
             
             for(let i=0; i<tempWishlist?.length; i++){
-                if(Product._id==tempWishlist[i]._id){
-                    console.log("temProduct");
+                if(product._id==tempWishlist[i]._id){
                     
                     setIsWishlist(1);
                     break;
