@@ -7,28 +7,12 @@ import { Link } from "react-router-dom";
 
 export default function Cart(){
     let {userToken} = useContext(UserLogin);
-    let {cartNumber, updateCart, removeCart, removeFromCart, setCartNumber, setCartId} = useContext(CartData);
-    let [cart, setCart] = useState(null);
-    async function getCartData(){
-        let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`,
-            {
-                headers: {
-                    token: userToken,
-                }
-            }
-        );
-        if(data.status == "success"){
-            setCartNumber(data.numOfCartItems);
-            setCart(data.data);
-            setCartId(data.data._id)
-        }
-        
-
-    }
+    let {cartNumber, cart, getCartData, updateCart, removeCart, removeFromCart, setCartNumber, setCartId} = useContext(CartData);
+    
 
     useEffect(()=>{
         getCartData();
-    },[cartNumber, cart]);
+    },[cartNumber]);
 
 
     return (
@@ -107,9 +91,10 @@ export default function Cart(){
                             </dl>
                         </div>
     
+                        {cart.products.length >0? <>
                         <button onClick={()=> removeCart(cart._id)} className="flex w-full items-center justify-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 ">Clear</button>
                         <Link to='/checkout' className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 ">Chekout</Link>
-
+                        </>: null}
                         
     
                        
