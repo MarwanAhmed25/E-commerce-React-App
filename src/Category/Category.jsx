@@ -2,12 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import Load from "../Load/Load";
+import { useLocation } from "react-router-dom";
 
 
 export default function Category(){
 
     const [categories, setCategories] = useState([]);
-
+    
     async function getCategories(){
         let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
         

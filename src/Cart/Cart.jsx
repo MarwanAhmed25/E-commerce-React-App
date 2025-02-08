@@ -6,19 +6,44 @@ import { Link } from "react-router-dom";
 
 
 export default function Cart(){
+    let [isLoading, setIsLoading] = useState(0);
     let {userToken} = useContext(UserLogin);
     let {cartNumber, cart, getCartData, updateCart, removeCart, removeFromCart, setCartNumber, setCartId} = useContext(CartData);
     
 
     useEffect(()=>{
         getCartData();
-    },[cartNumber]);
+    },[cartNumber, isLoading]);
+
+
+    async function fireUpdateCart(productId,count){
+        console.log("0000000000");
+        
+        setIsLoading(1);
+        await updateCart(productId, count);
+        setIsLoading(0);
+        
+    }
+
+    async function fireRemoveCart(cartId){
+        setIsLoading(1);
+        await removeCart(cartId);
+        setIsLoading(0);
+        
+    }
+
+    async function fireRemoveFromCart(productId){
+        setIsLoading(1);
+        await removeFromCart(productId);
+        setIsLoading(0);
+        
+    }
 
 
     return (
         <>
         
-        {cart? <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+        {!isLoading && cart? <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
                 <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Shopping Cart</h2>
     
@@ -36,13 +61,13 @@ export default function Cart(){
                             <label htmlFor="counter-input" className="sr-only">Choose quantity:</label>
                             <div className="flex items-center justify-between md:order-3 md:justify-end">
                                 <div className="flex items-center">
-                                <button onClick={()=> updateCart(product.product._id, product.count - 1)} type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                <button onClick={()=> fireUpdateCart(product.product._id, product.count - 1)} type="button" id="decrement-button" data-input-counter-decrement="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                     <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
                                     </svg>
                                 </button>
                                 <input type="text" id="counter-input" data-input-counter className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0 dark:text-white" placeholder="" value={product.count} required />
-                                <button onClick={()=> updateCart(product.product._id, product.count + 1)} type="button" id="increment-button" data-input-counter-increment="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+                                <button onClick={()=> fireUpdateCart(product.product._id, product.count + 1)} type="button" id="increment-button" data-input-counter-increment="counter-input" className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
                                     <svg className="h-2.5 w-2.5 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
                                     </svg>
@@ -64,7 +89,7 @@ export default function Cart(){
                                     Add to Favorites
                                 </button>
 
-                                <button onClick={()=> removeFromCart(product.product._id)} type="button" className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
+                                <button onClick={()=> fireRemoveFromCart(product.product._id)} type="button" className="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
                                     <svg className="me-1.5 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
                                     </svg>
@@ -92,8 +117,10 @@ export default function Cart(){
                         </div>
     
                         {cart.products.length >0? <>
-                        <button onClick={()=> removeCart(cart._id)} className="flex w-full items-center justify-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 ">Clear</button>
-                        <Link to='/checkout' className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 ">Chekout</Link>
+                        <button onClick={()=> fireRemoveCart(cart._id)} className="flex w-full items-center justify-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 ">Clear</button>
+                        <Link to='/checkout' className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 ">
+                        Checkout
+                        </Link>
                         </>: null}
                         
     

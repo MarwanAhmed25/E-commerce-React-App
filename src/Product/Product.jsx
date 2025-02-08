@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { CartData } from "../Context/Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +8,14 @@ export default function Product({product}){
 
     let {pathname} = useLocation()
     let {addToCart} = useContext(CartData);
+    let [isLoading, setIsLoading] = useState(0);
+
+    async function fireAddToCart(productId){
+        setIsLoading(1);
+        await addToCart(productId);
+        setIsLoading(0);
+        
+    }
     
 
     return <>
@@ -36,7 +44,9 @@ export default function Product({product}){
                     </div>
                     <div className="flex items-center justify-center">
                         
-                        <button onClick={()=> addToCart(product.id)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</button>
+                        <button onClick={()=> fireAddToCart(product.id)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        {isLoading?"Loading...":"Add to cart"}
+                        </button>
                         <button className="ms-2">
                         <FontAwesomeIcon icon={faHeart} className="text-2xl" />
                         </button>

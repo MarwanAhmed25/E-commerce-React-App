@@ -108,7 +108,6 @@ export function CartDataProvider({children}){
         
         if(data.message == "success"){            
             cartLocalStorage(0);
-
         }
     }
 
@@ -121,7 +120,7 @@ export function CartDataProvider({children}){
             }
         );
 
-        if(data.status == "success"){            
+        if(data.status == "success"){     
             cartLocalStorage(data.numOfCartItems);
         }
     }
