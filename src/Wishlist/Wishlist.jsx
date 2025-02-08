@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 export default function Wishlist(){
     const [wishlist, setWishlist] = useState(null);
-    const [getNewData, setNewData] = useState(0);
     let {addToCart} = useContext(CartData);
     let [isAdd, seIsAdd] = useState(0);
     let {removeFromWishlist} = useContext(WishlistData);
@@ -38,17 +37,18 @@ export default function Wishlist(){
     }
 
     async function fireRemoveFromWishlist(productId){
+        seIsAdd(1)
         await removeFromWishlist(productId);
-        setNewData(1);
+        seIsAdd(0);
     }
 
     useEffect(()=>{
         getWishlistData();
-    },[getNewData]);
+    },[isAdd]);
 
 
     return <>
-    {wishlist? <>
+    {!isAdd? <>
         <section className="bg-white antialiased dark:bg-gray-900">
         <h1 className="text-xl text-gray-900 dark:text-white sm:text-2xl flex items-center justify-center font-bold">Wishlist</h1>
 
