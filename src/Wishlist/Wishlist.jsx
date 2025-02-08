@@ -48,7 +48,7 @@ export default function Wishlist(){
 
 
     return <>
-    {!isAdd || wishlist? <>
+    {wishlist? <>
         <section className="bg-white antialiased dark:bg-gray-900">
         <h1 className="text-xl text-gray-900 dark:text-white sm:text-2xl flex items-center justify-center font-bold">Wishlist</h1>
 
