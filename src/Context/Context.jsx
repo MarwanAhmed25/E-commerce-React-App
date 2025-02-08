@@ -32,6 +32,15 @@ export let CartData = createContext(0);
 export function CartDataProvider({children}){
     let {userToken} = useContext(UserLogin);
     let [cartNumber, setCartNumber] = useState(0);
+
+    if(!cartNumber && parseInt(localStorage.getItem('cart'))){
+        setCartNumber(parseInt(localStorage.getItem('cart')));
+    }
+
+    function cartLocalStorage(numOfCartItems){
+        localStorage.setItem('cart', numOfCartItems);
+        setCartNumber(numOfCartItems);
+    }
     async function addToCart(productId){
         let {data} = await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`, {"productId":productId},
             {
@@ -42,7 +51,7 @@ export function CartDataProvider({children}){
         );
 
         if(data.status == "success"){
-            setCartNumber(data.numOfCartItems);
+            cartLocalStorage(data.numOfCartItems);
         }
         
     }
@@ -57,7 +66,7 @@ export function CartDataProvider({children}){
         );
 
         if(data.status == "success"){
-            setCartNumber(data.numOfCartItems);
+            cartLocalStorage(data.numOfCartItems);
         }
         
     }
@@ -70,9 +79,9 @@ export function CartDataProvider({children}){
                 }
             }
         );
-       
-        if(data.status == "success"){
-            setCartNumber(data.numOfCartItems);
+        
+        if(data.message == "success"){            
+            cartLocalStorage(0);
         }
     }
 
@@ -85,8 +94,8 @@ export function CartDataProvider({children}){
             }
         );
 
-        if(data.status == "success"){
-            setCartNumber(data.numOfCartItems);
+        if(data.status == "success"){            
+            cartLocalStorage(data.numOfCartItems);
         }
     }
 
