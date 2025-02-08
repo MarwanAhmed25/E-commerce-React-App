@@ -48,7 +48,6 @@ export function CartDataProvider({children}){
     }
 
     async function updateCart(productId, quantity){
-        console.log("update cart", productId, quantity);
         let {data} = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {"count":quantity},
             {
                 headers:{
@@ -56,8 +55,6 @@ export function CartDataProvider({children}){
                 }
             }
         );
-        console.log(data);
-        
 
         if(data.status == "success"){
             setCartNumber(data.numOfCartItems);
@@ -66,7 +63,6 @@ export function CartDataProvider({children}){
     }
 
     async function removeCart(){
-        console.log("remove cart");
         let {data} = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,
             {
                 headers:{
@@ -74,16 +70,13 @@ export function CartDataProvider({children}){
                 }
             }
         );
-        console.log(data);
-        
-
+       
         if(data.status == "success"){
             setCartNumber(data.numOfCartItems);
         }
     }
 
     async function removeFromCart(productId){
-        console.log("remove from cart", productId);
         let {data} = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
             {
                 headers:{
@@ -91,8 +84,6 @@ export function CartDataProvider({children}){
                 }
             }
         );
-        console.log(data);
-        
 
         if(data.status == "success"){
             setCartNumber(data.numOfCartItems);
@@ -100,7 +91,7 @@ export function CartDataProvider({children}){
     }
 
 
-    return <CartData.Provider value={{updateCart, removeFromCart, addToCart, removeCart, cartNumber}}>
+    return <CartData.Provider value={{updateCart, removeFromCart, addToCart, removeCart, cartNumber, setCartNumber}}>
         {children}
     </CartData.Provider>
 }
