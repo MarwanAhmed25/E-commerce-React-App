@@ -41,7 +41,7 @@ export default function Products(){
         <> <div className="w-8/12 mx-auto my-4">
             <input type="text" placeholder="search..." className="w-full rounded border-gray-300 size-10" onInput={searchInput} />
         </div>
-        <div className="flex container flex-wrap m-auto">
+        <div className="flex container w-11/12 flex-wrap m-auto">
             {filteresProducts.map((product)=> <Product product={product}></Product>)}
         </div></>
         

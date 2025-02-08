@@ -5,7 +5,7 @@ import Load from "../Load/Load";
 import { CartData, UserLogin } from "../Context/Context";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-
+import Slider from "react-slick";
 
 export default function ProductDetail(){
     const {id} = useParams();
@@ -13,6 +13,13 @@ export default function ProductDetail(){
     let z = useContext(UserLogin)
     let {addToCart} = useContext(CartData);
     let [isLoading, setIsLoading] = useState(0);
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      };
 
     async function fireAddToCart(productId){
         setIsLoading(1);
@@ -47,10 +54,10 @@ export default function ProductDetail(){
 
         <div className="flex items-center container m-auto">
             <div className="w-1/3 ">
-               
-                            <div className="" >
-                                <img src={product.imageCover} alt="producat image"/>
-                            </div>
+            <Slider {...settings}>
+                {product.images.map((src)=> <img src={src} alt="producat image"/>)}
+            </Slider>
+                              
                        
                 
             

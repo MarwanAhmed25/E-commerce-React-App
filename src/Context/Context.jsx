@@ -130,3 +130,62 @@ export function CartDataProvider({children}){
         {children}
     </CartData.Provider>
 }
+
+
+
+export let WishlistData = createContext(0);
+
+export function WishlistDataProvider({children}){
+    let {userToken} = useContext(UserLogin);
+    
+
+    function getWishlistData(){
+            axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+                {
+                    headers: {
+                        token: userToken,
+                    }
+                }
+            ).then(({data})=>{
+                console.log(data);
+            }).catch((e)=>{
+                console.log(e);
+            });
+            
+    
+    }
+
+    async function addWishlist(productId){
+        let {data} = await axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`, {"productId":productId},
+            {
+                headers:{
+                    token: userToken
+                }
+            }
+        );
+
+        if(data.status == "success"){
+            
+        }
+        
+    }
+
+    async function removeFromWishlist(productId){
+        let {data} = await axios.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
+            {
+                headers:{
+                    token: userToken
+                }
+            }
+        );
+
+        if(data.status == "success"){
+            
+        }
+        
+    }
+
+    return <WishlistData.Provider value={{removeFromWishlist, addWishlist}}>
+        {children}
+    </WishlistData.Provider>
+}
