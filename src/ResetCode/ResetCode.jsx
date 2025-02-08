@@ -17,7 +17,8 @@ export default function ResetCode(){
                             navigate('/reset-password');
                             
                         }).catch((response)=>{
-                            setError(response.response.data.message);                            
+                            setError(response.response.data.message);   
+                            setIsLoading(0);                         
                         });
 
         
@@ -58,7 +59,7 @@ export default function ResetCode(){
 
 
                 <div>
-                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
+                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{isLoading? "Loding...": "Submit"}</button>
                 </div>
                 </form>
 

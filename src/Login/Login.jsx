@@ -28,15 +28,17 @@ export default function Login(){
         setIsLoading(1);
         
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signin`, inputValues)
-                        .then(({data})=>{
-                            console.log(data);
-                            
-                            setUserData(data.token, data.user.name)
-                            navigate('/');
-                            
-                        }).catch((response)=>{
-                            setError(response.response.data.message);                            
-                        });
+        .then(({data})=>{
+            console.log(data);
+            
+            setUserData(data.token, data.user.name)
+            navigate('/');
+            
+        }).catch((response)=>{
+            setError(response.response.data.message);      
+            setIsLoading(0);
+                      
+        });
 
         
     }
@@ -86,7 +88,7 @@ export default function Login(){
                 </div>
 
                 <div>
-                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{isLoading? "Loding...": "Sign in"}</button>
                 </div>
                 </form>
 

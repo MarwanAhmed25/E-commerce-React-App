@@ -24,14 +24,15 @@ export default function Register(){
         setIsLoading(1);
         
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, inputValues)
-                        .then(({data})=>{
-                            setUserData(data.token, data.user.name)
-                            navigate('/');
-                            
-                        }).catch((response)=>{
-                            setError(response.response.data.message);                            
-                        });
-
+        .then(({data})=>{
+            setUserData(data.token, data.user.name)
+            navigate('/');
+            
+        }).catch((response)=>{
+            setError(response.response.data.message);  
+            setIsLoading(0);                          
+        });
+        
         
     }
 
@@ -122,7 +123,7 @@ export default function Register(){
               </div>: null}
 
                 <div>
-                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Register</button>
+                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{isLoading? "Loding...": "Register"}</button>
 
                 </div>
                 </form>

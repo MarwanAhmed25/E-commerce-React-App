@@ -2,6 +2,9 @@ import { Link, NavLink } from "react-router-dom"
 import './navbar.css'
 import { CartData, UserLogin } from "../Context/Context";
 import { useContext } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function Navbar(){
     
@@ -26,35 +29,31 @@ export default function Navbar(){
         <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-            </svg>
+        <FontAwesomeIcon icon={faCartShopping} className="text-blue-600" style={{fontSize:"24px"}}/>
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
         </NavLink>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             
             {userToken?
             <>
-                <button class="font-sans block mt-2 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
-                    <Link to="cart" role="button" class="relative flex">
-                        <svg class="flex-1 w-8 h-8 fill-current" viewbox="0 0 24 24" width="32" height="32">
-                        <path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/>
-                        </svg>
+                <button class="font-sans text-black hover:text-gray-700">
+                    <Link to="cart" role="button" className="relative flex  mx-4">
+                    <FontAwesomeIcon icon={faCartShopping} style={{fontSize:"24px"}} className=""/>
                         <span class="absolute right-0 top-0 rounded-full bg-blue-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm  leading-tight text-center">{cartNumber}
                         </span>
                     </Link>
                 </button>
-                <button onClick={Logout} class="font-sans block mt-2 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
+                <button onClick={Logout} class="font-sans block mx-5 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
                     Logout
                 </button>
             </>
             
             : 
             <>
-                <button class="font-sans block mt-2 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
+                <button class="font-sans block mx-3 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
                     <Link to="login">Login</Link>
                 </button>
-                <button class="font-sans block mt-2 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
+                <button class="font-sans block mx-3 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
                     <Link to="register">Register</Link>
                 </button>
             </>
