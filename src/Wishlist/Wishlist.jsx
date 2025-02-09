@@ -9,6 +9,7 @@ export default function Wishlist(){
     const [wishlist, setWishlist] = useState(null);
     let {addToCart} = useContext(CartData);
     let [isAdd, seIsAdd] = useState(0);
+    let [isLoading, setIsLoading] = useState(0);
     let {removeFromWishlist} = useContext(WishlistData);
     
     let {userToken} = useContext(UserLogin);
@@ -44,11 +45,14 @@ export default function Wishlist(){
 
     useEffect(()=>{
         getWishlistData();
-    },[isAdd]);
+    },[]);
 
+    if(isAdd){
+        return <Load></Load>
+    }
 
     return <>
-    {!isAdd? <>
+    {wishlist? <>
         <section className="bg-white antialiased dark:bg-gray-900">
         <h1 className="text-xl text-gray-900 dark:text-white sm:text-2xl flex items-center justify-center font-bold">Wishlist</h1>
 
