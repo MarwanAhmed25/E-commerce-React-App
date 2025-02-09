@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, createHashRouter } from 'react-router-dom'
 import Layout from './Layout/Layout'
 import Home from './Home/Home'
 import Products from './Products/Products'
@@ -24,7 +24,7 @@ import Checkout from './Checkout/Checkout'
 import Order from './Order/Order'
 import Wishlist from './Wishlist/Wishlist';
 
-let router = createBrowserRouter([
+let router = createHashRouter([
   {path:'/', element:<Layout/>, children:[
     {path:"", element: <ProtectedRoute><Home/></ProtectedRoute>},
     {path:"login", element: <Login/>},
