@@ -44,9 +44,7 @@ let router = createHashRouter([
     
   ]},
   
-],{
-  basename: "/E-commerce-React-App"
-})
+])
 
 function App() {
   
