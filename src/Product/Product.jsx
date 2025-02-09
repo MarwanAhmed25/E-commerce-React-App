@@ -27,17 +27,13 @@ export default function Product({product}){
     }
 
     async function fireAddWishlist(productId){
-        setIsLoading(1);
         await addToWishlist(productId);
-        setIsLoading(0);
         setIsWishlist(1);
         
     }
 
     async function fireRemoveFromWishlist(productId){
-        setIsLoading(1);
         await removeFromWishlist(productId);
-        setIsLoading(0);
         setIsWishlist(0);
     }
 

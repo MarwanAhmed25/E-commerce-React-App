@@ -29,7 +29,8 @@ export default function Checkout(){
             }
         })
         .then(({data})=>{
-            window.location.href = data.session.url;
+            console.log(data.session.url);
+            navigate('/allorders');
         }).catch((response)=>{
             setError(response.response.data.message);                            
         });
