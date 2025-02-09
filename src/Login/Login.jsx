@@ -32,7 +32,7 @@ export default function Login(){
             console.log(data);
             
             setUserData(data.token, data.user.name)
-            navigate('/');
+            navigate('');
             
         }).catch((response)=>{
             setError(response.response.data.message);      
