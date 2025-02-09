@@ -61,7 +61,7 @@ export default function ForgetPassword(){
 
                 <p className="mt-10 text-center text-sm/6 text-gray-500">
                
-                <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500">Login</Link>
+                <Link to="/E-commerce-React-App/login" className="font-semibold text-indigo-600 hover:text-indigo-500">Login</Link>
                 </p>
             </div>
             </div>

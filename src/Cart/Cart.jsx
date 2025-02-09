@@ -54,7 +54,7 @@ export default function Cart(){
                         <div className="space-y-6" key={product.product._id}>
                         <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                             <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                            <Link to={`/products/${product.product._id}`} className="shrink-0 md:order-1">
+                            <Link to={`/E-commerce-React-App/products/${product.product._id}`} className="shrink-0 md:order-1">
                                 <img className="h-20 w-20 dark:hidden" src={product.product.imageCover} alt="imac image" />
                             </Link>
 
@@ -118,7 +118,7 @@ export default function Cart(){
     
                         {cart.products.length >0? <>
                         <button onClick={()=> fireRemoveCart(cart._id)} className="flex w-full items-center justify-center rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 ">Clear</button>
-                        <Link to='/checkout' className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 ">
+                        <Link to='/E-commerce-React-App/checkout' className="flex w-full items-center justify-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 ">
                         Checkout
                         </Link>
                         </>: null}

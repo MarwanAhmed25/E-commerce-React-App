@@ -11,5 +11,5 @@ export default function ProtectedRoute({children}){
         return children
     }
 
-    return <Navigate to={"/login"}></Navigate>
+    return <Navigate to={"/E-commerce-React-App/login"}></Navigate>
 }
