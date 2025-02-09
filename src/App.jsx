@@ -41,7 +41,7 @@ let router = createBrowserRouter([
     {path:"checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute>},
     {path:'*', element:<Notfound />},
   ]},
-  {path:"/E-commerce-React-App/allorders", element: <ProtectedRoute><Order /></ProtectedRoute>},
+  {path:"E-commerce-React-App/allorders", element: <ProtectedRoute><Order /></ProtectedRoute>},
   
 ])
 
