@@ -28,11 +28,11 @@ export default function Checkout(){
                 token: userToken
             }
         })
-                        .then(({data})=>{
-                            window.location.href = data.session.url;
-                        }).catch((response)=>{
-                            setError(response.response.data.message);                            
-                        });
+        .then(({data})=>{
+            window.location.href = data.session.url;
+        }).catch((response)=>{
+            setError(response.response.data.message);                            
+        });
 
         
     }
