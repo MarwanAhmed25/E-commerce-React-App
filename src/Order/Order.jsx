@@ -52,11 +52,11 @@ export default function Order(){
                             return <tr>
                             <td className="whitespace-nowrap py-4 md:w-[384px]">
                             <div className="flex items-center gap-4">
-                                <Link to={`/E-commerce-React-App/products/${item.product.id}`} className="flex items-center aspect-square w-10 h-10 shrink-0">
+                                <Link to={`products/${item.product.id}`} className="flex items-center aspect-square w-10 h-10 shrink-0">
                                 <img className="h-auto w-full max-h-full dark:hidden" src={item.product.imageCover} alt="imac image" />
                                 <img className="hidden h-auto w-full max-h-full dark:block" src={item.product.imageCover} alt="imac image" />
                                 </Link>
-                                <Link to={`/E-commerce-React-App/products/${item.product.id}`} className="hover:underline">{item.product.title.slice(0, 15)}</Link>
+                                <Link to={`products/${item.product.id}`} className="hover:underline">{item.product.title.slice(0, 15)}</Link>
                             </div>
                             </td>
     

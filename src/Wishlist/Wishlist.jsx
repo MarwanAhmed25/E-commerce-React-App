@@ -61,7 +61,7 @@ export default function Wishlist(){
                                 <div className="" key={i}>
                                 <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                                     <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                                    <Link to={`/E-commerce-React-App/products/${w._id}`} className="shrink-0 ">
+                                    <Link to={`/products/${w._id}`} className="shrink-0 ">
                                         <img className="h-20 w-20 dark:hidden" src={w.imageCover} alt="imac image" />
                                     </Link>
                                     

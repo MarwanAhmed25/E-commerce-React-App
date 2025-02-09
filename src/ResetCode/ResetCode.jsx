@@ -14,7 +14,7 @@ export default function ResetCode(){
         
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`, inputValues)
                         .then(({data})=>{
-                            navigate('/E-commerce-React-App/reset-password');
+                            navigate('/reset-password');
                             
                         }).catch((response)=>{
                             setError(response.response.data.message);   
@@ -65,7 +65,7 @@ export default function ResetCode(){
 
                 <p className="mt-10 text-center text-sm/6 text-gray-500">
                
-                <Link to="/E-commerce-React-App/login" className="font-semibold text-indigo-600 hover:text-indigo-500">Login</Link>
+                <Link to="login" className="font-semibold text-indigo-600 hover:text-indigo-500">Login</Link>
                 </p>
             </div>
             </div>

@@ -32,7 +32,7 @@ export default function Login(){
             console.log(data);
             
             setUserData(data.token, data.user.name)
-            navigate('/E-commerce-React-App');
+            navigate('/');
             
         }).catch((response)=>{
             setError(response.response.data.message);      
@@ -79,7 +79,7 @@ export default function Login(){
                     <div className="flex items-center justify-between">
                     <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">Password</label>
                     <div className="text-sm">
-                        <Link to="/E-commerce-React-App/forget-password" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</Link>
+                        <Link to="forget-password" className="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</Link>
                     </div>
                     </div>
                     <div className="mt-2">
@@ -94,7 +94,7 @@ export default function Login(){
 
                 <p className="mt-10 text-center text-sm/6 text-gray-500">
                 Not a member?
-                <Link to="/E-commerce-React-App/register" className="font-semibold text-indigo-600 hover:text-indigo-500">Register</Link>
+                <Link to="register" className="font-semibold text-indigo-600 hover:text-indigo-500">Register</Link>
                 </p>
             </div>
             </div>

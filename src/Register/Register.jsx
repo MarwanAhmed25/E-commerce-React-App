@@ -26,7 +26,7 @@ export default function Register(){
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, inputValues)
         .then(({data})=>{
             setUserData(data.token, data.user.name)
-            navigate('/E-commerce-React-App');
+            navigate('/');
             
         }).catch((response)=>{
             setError(response.response.data.message);  
@@ -130,7 +130,7 @@ export default function Register(){
 
                 <p className="mt-10 text-center text-sm/6 text-gray-500">
                 Have an account?
-                <Link to="/E-commerce-React-App/login" className="font-semibold text-indigo-600 hover:text-indigo-500">Login</Link>
+                <Link to="login" className="font-semibold text-indigo-600 hover:text-indigo-500">Login</Link>
                 </p>
             </div>
             </div>

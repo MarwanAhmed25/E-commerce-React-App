@@ -25,7 +25,7 @@ import Order from './Order/Order'
 import Wishlist from './Wishlist/Wishlist';
 
 let router = createBrowserRouter([
-  {path:'E-commerce-React-App', element:<Layout/>, children:[
+  {path:'/', element:<Layout/>, children:[
     {path:"", element: <ProtectedRoute><Home/></ProtectedRoute>},
     {path:"login", element: <Login/>},
     {path:"forget-password", element: <ForgetPassword/>},
@@ -40,10 +40,13 @@ let router = createBrowserRouter([
     {path:"cart", element: <ProtectedRoute><Cart /></ProtectedRoute>},
     {path:"checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute>},
     {path:"allorders", element: <ProtectedRoute><Order /></ProtectedRoute>},
+    {path:"*", element: <Notfound></Notfound>},
     
   ]},
   
-])
+],{
+  basename: "/E-commerce-React-App"
+})
 
 function App() {
   
