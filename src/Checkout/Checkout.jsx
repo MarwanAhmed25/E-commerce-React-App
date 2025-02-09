@@ -21,9 +21,12 @@ export default function Checkout(){
 
     function handleRegister(inputValues){
         setIsLoading(1);
-        let nextProdUrl = "https://marwanahmed25.github.io/E-commerce-React-App/";
+        let nextProdUrl = "https://marwanahmed25.github.io/E-commerce-React-App/#";
         //let nextUrl = "http://localhost:5173/E-commerce-React-App";
-        axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${nextProdUrl}#`, {"shippingAddress":inputValues},{
+        let encodedUrl = encodeURIComponent(nextProdUrl);
+        console.log(encodedUrl);
+        
+        axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${encodedUrl}`, {"shippingAddress":inputValues},{
             headers:{
                 token: userToken
             }
