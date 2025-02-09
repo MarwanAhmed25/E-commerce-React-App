@@ -79,7 +79,7 @@ export default function Product({product}){
                 
         <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/5" key={product.id}>
             <div className="max-w-sm  sm:mx-auto md:m-2 bg-white hover:border border-gray-200 rounded-lg hover:shadow dark:bg-gray-800 dark:border-gray-700">
-                <Link to={pathname.includes('products')?`${product.id}` : `products/${product.id}`}>
+                <Link to={pathname.includes('products')?`${product.id}` : `/products/${product.id}`}>
                     <img className="p-8 rounded-t-lg" src={product.imageCover} alt="product image" />
                 </Link>
                 <div className="px-5 pb-5">
