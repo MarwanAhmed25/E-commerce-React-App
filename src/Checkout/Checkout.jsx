@@ -21,7 +21,7 @@ export default function Checkout(){
 
     function handleRegister(inputValues){
         setIsLoading(1);
-        let nextUrl = "https://marwanahmed25.github.io/E-commerce-React-App/";
+        let nextUrl = "https://marwanahmed25.github.io/E-commerce-React-App";
         axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${nextUrl}`, {"shippingAddress":inputValues},{
             headers:{
                 token: userToken
@@ -98,7 +98,7 @@ export default function Checkout(){
               </div>: null}
 
                 <div>
-                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Checkout Now</button>
+                    <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">{isLoading? "Loding...":"Checkout Now"}</button>
 
                 </div>
                 </form>
