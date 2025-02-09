@@ -26,7 +26,7 @@ export default function Register(){
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, inputValues)
         .then(({data})=>{
             setUserData(data.token, data.user.name)
-            navigate('/');
+            navigate('/E-commerce-React-App');
             
         }).catch((response)=>{
             setError(response.response.data.message);  
