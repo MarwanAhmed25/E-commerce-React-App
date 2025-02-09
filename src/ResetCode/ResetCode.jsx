@@ -14,7 +14,7 @@ export default function ResetCode(){
         
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/verifyResetCode`, inputValues)
                         .then(({data})=>{
-                            navigate('/reset-password');
+                            navigate('/E-commerce-React-App/reset-password');
                             
                         }).catch((response)=>{
                             setError(response.response.data.message);   
