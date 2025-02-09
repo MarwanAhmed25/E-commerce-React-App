@@ -12,14 +12,12 @@ export default function Order(){
     let [orders, setOrders] = useState([]);
     let userId = localStorage.getItem("userId");
     function getOrders(){
-        console.log(userId, userToken);
         
         axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`,{
             headers:{
                 token: userToken,
             }
         }).then(({data})=>{
-            console.log(data);
             
             setOrders(data);
             
