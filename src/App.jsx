@@ -24,7 +24,7 @@ import Checkout from './Checkout/Checkout'
 import Order from './Order/Order'
 import Wishlist from './Wishlist/Wishlist';
 
-let router = createHashRouter([
+let router = createBrowserRouter([
   {path:'/', element:<Layout/>, children:[
     {path:"", element: <ProtectedRoute><Home/></ProtectedRoute>},
     {path:"login", element: <Login/>},
