@@ -2,7 +2,7 @@
   "name": "ecommerce",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://MarwanAhmed25.github.io/E-commerce-React-App",
+  "homepage": "https://MarwanAhmed25.github.io",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
