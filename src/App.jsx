@@ -39,7 +39,7 @@ let router = createBrowserRouter([
     {path:"products/:id", element: <ProtectedRoute><ProductDetail /></ProtectedRoute>},
     {path:"cart", element: <ProtectedRoute><Cart /></ProtectedRoute>},
     {path:"checkout", element: <ProtectedRoute><Checkout /></ProtectedRoute>},
-    {path:'*', element:<Notfound />},
+    
   ]},
   {path:"E-commerce-React-App/allorders", element: <ProtectedRoute><Order /></ProtectedRoute>},
   
