@@ -21,7 +21,7 @@ export default function Checkout(){
 
     function handleRegister(inputValues){
         setIsLoading(1);
-        let nextProdUrl = "https://marwanahmed25.github.io/E-commerce-React-App";
+        let nextProdUrl = "https://marwanahmed25.github.io/";
         let nextUrl = "http://localhost:5173/E-commerce-React-App";
         axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${nextProdUrl}`, {"shippingAddress":inputValues},{
             headers:{
@@ -29,8 +29,7 @@ export default function Checkout(){
             }
         })
         .then(({data})=>{
-            console.log(data.session.url);
-            navigate('/allorders');
+            window.location.href = data.session.url;
         }).catch((response)=>{
             setError(response.response.data.message);                            
         });
