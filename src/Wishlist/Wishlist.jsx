@@ -45,7 +45,7 @@ export default function Wishlist(){
 
     useEffect(()=>{
         getWishlistData();
-    },[]);
+    },[isAdd]);
 
     if(isAdd){
         return <Load></Load>
