@@ -1,31 +1,36 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import Card from "../Card/Card";
 import Load from "../Load/Load";
+import { useQuery } from "@tanstack/react-query";
 
 
 export default function Brand(){
 
-    const [brands, setBrands] = useState([]);
-
-    async function getBrands(){
-        let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/brands`);
-        
-        
-        setBrands(data.data);
-
+    function getBrands(){
+        return axios.get(`https://ecommerce.routemisr.com/api/v1/brands`);
     }
 
-    useEffect(()=>{
-        getBrands();
-    }, []);
+    let {data, isError, error, isLoading, refetch} = useQuery({
+        queryKey: ['brands'],
+        queryFn: getBrands,
+        staleTime: 5000,
+        refetchInterval: 5000,
+        gcTime: 5000,
+    });  
+    
+    if(isLoading){
+        return <Load />
+    }
 
-    return (brands.length)<1? 
-    <Load></Load>
-    :
-    <>
+    if(isError){
+        return <>
+            <p className="w-full text-red-700 bg-red-400">{error}</p>
+        </>
+    }
+
+    return    <>
     <div className="flex flex-wrap">
-        {brands.map((brand)=> <Card obj={brand} /> )}
+        {data?.data.data.map((brand)=> <Card obj={brand} /> )}
     </div>
         
     </>  

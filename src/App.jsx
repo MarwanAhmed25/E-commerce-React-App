@@ -1,6 +1,4 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import './App.css'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -23,6 +21,7 @@ import Cart from './Cart/Cart'
 import Checkout from './Checkout/Checkout'
 import Order from './Order/Order'
 import Wishlist from './Wishlist/Wishlist';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 let router = createHashRouter([
   {path:'/', element:<Layout/>, children:[
@@ -48,15 +47,20 @@ let router = createHashRouter([
 
 function App() {
   
+  let queryClient = new QueryClient();
   return (
     <>
-      <UserLoginProvider>   
+    <QueryClientProvider client={queryClient}>
+    <UserLoginProvider>   
         <CartDataProvider>
           <WishlistDataProvider>
-          <RouterProvider router={router}></RouterProvider>
+          <RouterProvider router={router}>
+          </RouterProvider>
+          <ReactQueryDevtools />
           </WishlistDataProvider>
         </CartDataProvider> 
       </UserLoginProvider>
+    </QueryClientProvider>
     </>
   )
 }

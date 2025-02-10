@@ -9,9 +9,9 @@ import src1 from '../assets/one.jpg';
 import src2 from '../assets/two.jpg';
 import src3 from '../assets/three.jpg';
 import src4 from '../assets/four.jpg';
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home(){
-    const [categories, setCategories] = useState([]);
     var settings = {
         dots: true,
         infinite: false,
@@ -19,18 +19,25 @@ export default function Home(){
         slidesToShow: 5,
         slidesToScroll: 1,
     };
-    async function getCategories(){
-        let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);
-        
-        setCategories(data.data);
-        
+    function getCategories(){
+        return axios.get(`https://ecommerce.routemisr.com/api/v1/categories`);     
 
     }
 
-    useEffect(()=>{        
-        getCategories();
-        
-    }, []);
+    let {data, isError, error, isLoading, refetch} = useQuery({
+        queryKey: ['caregories'],
+        queryFn: getCategories,
+        staleTime: 5000,
+        refetchInterval: 5000,
+        gcTime: 5000,
+    }); 
+    
+    
+    if(isError){
+        return <>
+            <p className="w-full text-red-700 bg-red-400">{error}</p>
+        </>
+    }
 
 
     return<>
@@ -38,7 +45,7 @@ export default function Home(){
         
     
         <Slider {...settings} className="mb-12 w-full">
-            {categories.map((cat,i)=>{
+            {data?.data.data.map((cat,i)=>{
                 return <>
                 <div>
                 <div className="max-w-sm  sm:mx-auto bg-white border  rounded-lg hover:shadow dark:bg-gray-800 ">

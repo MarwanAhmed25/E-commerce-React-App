@@ -67,62 +67,58 @@ export function CartDataProvider({children}){
     }
 
     async function addToCart(productId){
-        let {data} = await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`, {"productId":productId},
+        return axios.post(`https://ecommerce.routemisr.com/api/v1/cart`, {"productId":productId},
             {
                 headers:{
                     token: userToken
                 }
             }
-        );
-
-        if(data.status == "success"){
+        ).then(({data})=> {
             cartLocalStorage(data.numOfCartItems);
-        }
+            
+        }).catch((e)=> e);
         
     }
 
     async function updateCart(productId, quantity){
-        let {data} = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {"count":quantity},
+        return axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {"count":quantity},
             {
                 headers:{
                     token: userToken
                 }
             }
-        );
-
-        if(data.status == "success"){
-            
+        ).then(({data})=> {
             cartLocalStorage(data.numOfCartItems);
-        }
+        }).catch((e)=> e);
         
     }
 
     async function removeCart(){
-        let {data} = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,
+        return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`,
             {
                 headers:{
                     token: userToken
                 }
             }
-        );
-        
-        if(data.message == "success"){            
-            cartLocalStorage(0);
-        }
+        ).then(({data})=> {
+            cartLocalStorage(data.numOfCartItems);
+            
+        }).catch((e)=> e);
     }
 
     async function removeFromCart(productId){
-        let {data} = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
+        return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`,
             {
                 headers:{
                     token: userToken
                 }
             }
-        );
-
-        if(data.status == "success"){     
+        ).then(({data})=> {
             cartLocalStorage(data.numOfCartItems);
-        }
+            
+        }).catch((e)=> e);
+
+        
     }
 
 
@@ -141,24 +137,24 @@ export function WishlistDataProvider({children}){
     
 
     async function addToWishlist(productId){
-        let {data} = await axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`, {"productId":productId},
+        return axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`, {"productId":productId},
             {
                 headers:{
                     token: userToken
                 }
             }
-        );
+        ).then(({data})=>  data).catch((e)=> e);
 
     }
 
     async function removeFromWishlist(productId){
-        let {data} = await axios.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
+        return axios.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
             {
                 headers:{
                     token: userToken
                 }
             }
-        );
+        ).then(({data})=>  data).catch((e)=> e);
         
     }
 

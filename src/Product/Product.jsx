@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { CartData,  WishlistData} from "../Context/Context";
 import { UserLogin } from "../Context/Context";
 import Load from "../Load/Load";
+import { useQuery } from "@tanstack/react-query";
 
 
 
@@ -13,7 +14,6 @@ export default function Product({product}){
 
     let {pathname} = useLocation()
     let {addToCart} = useContext(CartData);
-    let [isLoading, setIsLoading] = useState(0);
     let [isAdd, seIsAdd] = useState(0);
     
     const [isWishlist, setIsWishlist] = useState(0);
@@ -27,55 +27,61 @@ export default function Product({product}){
     }
 
     async function fireAddWishlist(productId){
-        await addToWishlist(productId);
         setIsWishlist(1);
+        let response = await addToWishlist(productId);
+        if(response.status !== "success"){
+            setIsWishlist(0);
+        }
         
     }
 
     async function fireRemoveFromWishlist(productId){
-        await removeFromWishlist(productId);
         setIsWishlist(0);
+        let response = await removeFromWishlist(productId);
+        if(response.status !== "success"){
+            setIsWishlist(1);
+        }
     }
 
     
     let {userToken} = useContext(UserLogin);
     
     function getWishlistData(){
-        axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+        return axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
             {
                 headers: {
                     token: userToken,
                 }
             }
-        ).then(({data})=>{
-
-            let tempWishlist = data.data;
-            
-            for(let i=0; i<tempWishlist?.length; i++){
-                if(product._id==tempWishlist[i]._id){
-                    
-                    setIsWishlist(1);
-                    break;
-                }
-            } 
-            
-        }).catch((e)=>{
-            console.log(e);
-        });
+        )
     }
     
+    let {data, isError, error, isLoading, refetch} = useQuery({
+        queryKey: ['wishlist'],
+        queryFn: getWishlistData,
+        staleTime: 5000,
+        refetchInterval: 5000,
+        gcTime: 5000,
+    }); 
+    
+    useEffect(() => {
+        if (!isLoading && data?.data?.data) {
+            const isInWishlist = data.data.data.some((item) => item._id === product._id);
+            setIsWishlist(isInWishlist);
+        }
+    }, [data, isLoading, product._id]);
+    
+    if(isError){
+        return <>
+            <p className="w-full text-red-700 bg-red-400">{error}</p>
+        </>
+    }
 
     
 
-
-    useEffect(()=>{
-        getWishlistData();
-        
-    }, [isWishlist]);
-
     
 
-    return (isLoading)? <Load/>: <>
+    return <>
                 
         <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/5" key={product.id}>
             <div className="max-w-sm  sm:mx-auto md:m-2 bg-white hover:border border-gray-200 rounded-lg hover:shadow dark:bg-gray-800 dark:border-gray-700">

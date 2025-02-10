@@ -15,7 +15,7 @@ export default function ProductDetail(){
     const [isWishlist, setIsWishlist] = useState(0);
     let {addToWishlist, removeFromWishlist} = useContext(WishlistData)
     let {addToCart} = useContext(CartData);
-    let [isLoading, setIsLoading] = useState(0);
+    let [isLoading, setIsLoading] = useState(false);
     var settings = {
         dots: true,
         infinite: true,
@@ -25,25 +25,29 @@ export default function ProductDetail(){
       };
 
     async function fireAddToCart(productId){
-        setIsLoading(1);
+        setIsLoading(true);
+        console.log(isLoading);
+        
         await addToCart(productId);
         setIsLoading(0);
         
     }
     
     async function fireAddWishlist(productId){
-      
-        await addToWishlist(productId);
-        setIsLoading(0);
         setIsWishlist(1);
-        
+        let response = await addToWishlist(productId);
+        if(response.status !== "success"){
+            setIsWishlist(0);
+        }
     }
 
     async function fireRemoveFromWishlist(productId){
-
-        await removeFromWishlist(productId);
-        setIsLoading(0);
         setIsWishlist(0);
+        let response = await removeFromWishlist(productId);
+        
+        if(response.status !== "success"){
+            setIsWishlist(1);
+        }
     }
 
     
@@ -89,7 +93,7 @@ export default function ProductDetail(){
     useEffect(()=>{
         getWishlistData();
         
-    }, [isWishlist]);
+    }, []);
 
   
 

@@ -4,60 +4,65 @@ import { WishlistData, UserLogin, CartData } from "../Context/Context";
 import Load from "../Load/Load";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
 
 export default function Wishlist(){
-    const [wishlist, setWishlist] = useState(null);
     let {addToCart} = useContext(CartData);
-    let [isAdd, seIsAdd] = useState(0);
-    let [isLoading, setIsLoading] = useState(0);
+    let [isAdd, setIsAdd] = useState(0);
     let {removeFromWishlist} = useContext(WishlistData);
-    
     let {userToken} = useContext(UserLogin);
     
     function getWishlistData(){
-        axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
+        return axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`,
             {
                 headers: {
                     token: userToken,
                 }
             }
-        ).then(({data})=>{
-            setWishlist(data.data);
-            
-        }).catch((e)=>{
-            console.log(e);
-        });
+        )
     }
+
+    let {data, isError, error, isLoading, refetch} = useQuery({
+        queryKey: 'wishlist',
+        queryFn: getWishlistData,
+        staleTime: 5000,
+        refetchInterval: 5000,
+        gcTime: 5000,
+    });    
 
     
     async function fireAddToCart(productId){
-        seIsAdd(1);
+        setIsAdd(1);
         await addToCart(productId);
-        seIsAdd(0);
+        setIsAdd(0);
         
     }
 
     async function fireRemoveFromWishlist(productId){
-        seIsAdd(1)
+        setIsAdd(1)
         await removeFromWishlist(productId);
-        seIsAdd(0);
+        setIsAdd(0);
+        refetch();
     }
 
-    useEffect(()=>{
-        getWishlistData();
-    },[isAdd]);
 
-    if(isAdd){
-        return <Load></Load>
+    if(isAdd || isLoading){
+        return <Load />
     }
 
-    return <>
-    {wishlist? <>
+    if(isError){
+        return <>
+            <p className="w-full text-red-700 bg-red-400">{error}</p>
+        </>
+    }
+
+    return  <>
         <section className="bg-white antialiased dark:bg-gray-900">
         <h1 className="text-xl text-gray-900 dark:text-white sm:text-2xl flex items-center justify-center font-bold">Wishlist</h1>
 
             <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-                            {wishlist?.map((w,i)=>
+                            {data?.data.data.map((w,i)=>
                                 <div className="" key={i}>
                                 <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
                                     <div className="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
@@ -97,6 +102,5 @@ export default function Wishlist(){
             </div>
     
     </section>
-</>: <Load></Load>}
 </>
 }

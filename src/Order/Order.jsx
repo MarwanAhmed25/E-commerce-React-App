@@ -9,34 +9,38 @@ import Load from "../Load/Load";
 export default function Order(){
     let {userToken} = useContext(UserLogin);
     let {getCartData} = useContext(CartData);
-    let [orders, setOrders] = useState([]);
     let userId = localStorage.getItem("userId");
     function getOrders(){
         
-        axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`,{
+        return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`,{
             headers:{
                 token: userToken,
             }
-        }).then(({data})=>{
-            
-            setOrders(data);
-            
-        }).catch((e)=>{
-            console.log(e);
-            
         })
     }
-
-    useEffect(()=>{
-        getOrders();
-    }, []);
+    let {data, isError, error, isLoading, refetch} = useQuery({
+        queryKey: ['odrders'],
+        queryFn: getOrders,
+        staleTime: 5000,
+        refetchInterval: 5000,
+        gcTime: 5000,
+    }); 
+    
+    if(isLoading){
+            return <Load />
+        }
+    
+    if(isError){
+        return <>
+            <p className="w-full text-red-700 bg-red-400">{error}</p>
+        </>
+    }
 
     return <>
-        {orders.length? <>
     <section className="bg-white antialiased dark:bg-gray-900">
     <h1 className="text-xl text-gray-900 dark:text-white sm:text-2xl flex items-center justify-center font-bold">Order summary</h1>
 
-            { orders.map((order, i)=>{
+            { data?.data.data.map((order, i)=>{
                 return <><div className="mx-auto max-w-4xl my-8 shadow-xl p-5 rounded">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Order {i+1}#</h2>
     
@@ -99,6 +103,5 @@ export default function Order(){
             }
         
         </section>
-   </>: <Load></Load>}
     </>
 }
