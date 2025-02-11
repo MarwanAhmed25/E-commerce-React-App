@@ -43,7 +43,7 @@ export default function Order(){
     <section className="bg-white antialiased dark:bg-gray-900">
     <h1 className="text-xl text-gray-900 dark:text-white sm:text-2xl flex items-center justify-center font-bold">Order summary</h1>
 
-            { data?.data.data.map((order, i)=>{
+            { data?.data.map((order, i)=>{
                 return <><div className="mx-auto max-w-4xl my-8 shadow-xl p-5 rounded">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Order {i+1}#</h2>
     
