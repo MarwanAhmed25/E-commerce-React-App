@@ -35,8 +35,6 @@ export default function Order(){
         return <>
             <p className="w-full text-red-700 bg-red-400">{error}</p>
         </>
-    }else{
-        toast.success("succeed");
     }
 
     return <>
