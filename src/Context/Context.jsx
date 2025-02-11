@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useState } from "react";
+import toast from 'react-hot-toast';
 
 export let UserLogin = createContext(0);
 
@@ -60,7 +61,7 @@ export function CartDataProvider({children}){
                 setCartId(data.data._id);
                 localStorage.setItem("userId",data.data.cartOwner);   
             }).catch((e)=>{
-                console.log(e);
+                toast.error(e);
             });
             
     
@@ -75,8 +76,8 @@ export function CartDataProvider({children}){
             }
         ).then(({data})=> {
             cartLocalStorage(data.numOfCartItems);
-            
-        }).catch((e)=> e);
+            toast.success("Product added successfully.");
+        }).catch((e)=> toast.error(e));
         
     }
 
@@ -89,7 +90,8 @@ export function CartDataProvider({children}){
             }
         ).then(({data})=> {
             cartLocalStorage(data.numOfCartItems);
-        }).catch((e)=> e);
+            toast.success("Product updated successfully.");
+        }).catch((e)=> toast.error(e));
         
     }
 
@@ -102,8 +104,8 @@ export function CartDataProvider({children}){
             }
         ).then(({data})=> {
             cartLocalStorage(data.numOfCartItems);
-            
-        }).catch((e)=> e);
+            toast.success("Cart cleared successfully.");
+        }).catch((e)=> toast.error(e));
     }
 
     async function removeFromCart(productId){
@@ -115,8 +117,8 @@ export function CartDataProvider({children}){
             }
         ).then(({data})=> {
             cartLocalStorage(data.numOfCartItems);
-            
-        }).catch((e)=> e);
+            toast.success("Product removed successfully.");
+        }).catch((e)=> toast.error(e));
 
         
     }
@@ -143,7 +145,9 @@ export function WishlistDataProvider({children}){
                     token: userToken
                 }
             }
-        ).then(({data})=>  data).catch((e)=> e);
+        ).then(({data})=>  {
+            toast.success("Product added successfully.")
+        }).catch((e)=> toast.error(e));
 
     }
 
@@ -154,7 +158,9 @@ export function WishlistDataProvider({children}){
                     token: userToken
                 }
             }
-        ).then(({data})=>  data).catch((e)=> e);
+        ).then(({data})=>  {
+            toast.success("Product removed successfully.")
+        }).catch((e)=> toast.error(e));
         
     }
 

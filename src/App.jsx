@@ -22,6 +22,7 @@ import Checkout from './Checkout/Checkout'
 import Order from './Order/Order'
 import Wishlist from './Wishlist/Wishlist';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from 'react-hot-toast';
 
 let router = createHashRouter([
   {path:'/', element:<Layout/>, children:[
@@ -57,6 +58,7 @@ function App() {
           <RouterProvider router={router}>
           </RouterProvider>
           <ReactQueryDevtools />
+          <Toaster />
           </WishlistDataProvider>
         </CartDataProvider> 
       </UserLoginProvider>

@@ -30,14 +30,13 @@ export default function Login(){
         axios.post(`https://ecommerce.routemisr.com/api/v1/auth/signin`, inputValues)
         .then(({data})=>{
             console.log(data);
-            
+            toast.error(e)
             setUserData(data.token, data.user.name)
             navigate('/');
             
         }).catch((response)=>{
             setError(response.response.data.message);      
             setIsLoading(0);
-                      
         });
 
         

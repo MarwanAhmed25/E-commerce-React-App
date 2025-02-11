@@ -3,6 +3,7 @@ import { UserLogin, CartData } from "../Context/Context";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Load from "../Load/Load";
+import toast from "react-hot-toast";
 
 
 
@@ -34,6 +35,8 @@ export default function Order(){
         return <>
             <p className="w-full text-red-700 bg-red-400">{error}</p>
         </>
+    }else{
+        toast.success("succeed");
     }
 
     return <>

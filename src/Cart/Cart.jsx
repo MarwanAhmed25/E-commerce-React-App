@@ -17,8 +17,6 @@ export default function Cart(){
 
 
     async function fireUpdateCart(productId,count){
-        
-        
         setIsLoading(1);
         await updateCart(productId, count);
         setIsLoading(0);

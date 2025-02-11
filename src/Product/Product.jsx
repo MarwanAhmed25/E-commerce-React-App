@@ -7,6 +7,7 @@ import { CartData,  WishlistData} from "../Context/Context";
 import { UserLogin } from "../Context/Context";
 import Load from "../Load/Load";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 
 
@@ -68,6 +69,7 @@ export default function Product({product}){
         if (!isLoading && data?.data?.data) {
             const isInWishlist = data.data.data.some((item) => item._id === product._id);
             setIsWishlist(isInWishlist);
+            
         }
     }, [data, isLoading, product._id]);
     
