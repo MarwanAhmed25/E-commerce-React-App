@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Load from "../Load/Load";
 import toast from "react-hot-toast";
-
+import { useQuery } from "@tanstack/react-query";
 
 
 export default function Order(){
